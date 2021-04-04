@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface BookService {
-    public Book agregar(Book book);
-    public List<Book> listarAuthor();
-    public String detallar(Book book);
+    public Book agregar(Book book) throws Exception;
+    public List<String> listarAuthor(String autor) throws Exception;
+    public String detallar(String libro);
 }

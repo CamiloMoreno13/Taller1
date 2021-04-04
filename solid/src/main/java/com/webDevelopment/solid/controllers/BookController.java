@@ -1,6 +1,6 @@
 package com.webDevelopment.solid.controllers;
 
-import com.webDevelopment.solid.models.Book;
+import      com.webDevelopment.solid.models.Book;
 import com.webDevelopment.solid.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.webDevelopment.solid.SolidApplication.LOGGER;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -23,13 +25,37 @@ public class BookController {
 
     @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> agregarBook(@RequestBody Book book){
-        this.bookService.agregar(book);
-        return ResponseEntity.status(HttpStatus.OK).body(book);
+    HttpStatus codigo = HttpStatus.ACCEPTED;
+        try {
+            this.bookService.agregar(book);
+        }catch (Exception e){
+            LOGGER.error("BookController.agregarBook Causa: " + e.getMessage());
+            codigo = HttpStatus.BAD_REQUEST;
+        }
+        return ResponseEntity.status(codigo).body(book);
     }
 
     @GetMapping(value = "/listar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Book>> getLibrosAuthor(){
-        List<Book> books = this.bookService.listarAuthor();
+    public ResponseEntity<List<String>> getLibrosAuthor(@RequestBody String autor){
+        List<String> books = null;
+        try {
+            books = this.bookService.listarAuthor(autor);
+        } catch (Exception e){
+            LOGGER.error("BookController.getLibrosAuthor Causa: " + e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.OK).body(books);
+    }
+
+    @GetMapping(value = "/detallar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> detallarlibro(@RequestBody String libro){
+        String detalle = null;
+        HttpStatus codigo = HttpStatus.OK;
+        try{
+            detalle = this.bookService.detallar(libro);
+        } catch (Exception e){
+            codigo = HttpStatus.BAD_REQUEST;
+            detalle = "No existe libro";
+        }
+        return ResponseEntity.status(codigo).body(detalle);
     }
 }

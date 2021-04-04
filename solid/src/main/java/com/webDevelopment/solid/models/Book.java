@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class Book implements Serializable {
     private String title;
@@ -11,14 +13,65 @@ public class Book implements Serializable {
     private Integer publishedYear;
     private Double price;
     private Integer paginas;
+    private String descripcion;
 
     @JsonCreator
-    public Book(@JsonProperty("title") String title,@JsonProperty("author") String author, @JsonProperty("publishedYear")Integer publishedYear, @JsonProperty("price") Double price,@JsonProperty("paginas") Integer paginas) {
+    public Book(String title, String author, Integer publishedYear, Double price, Integer paginas, String descripcion) {
         this.title = title;
         this.author = author;
         this.publishedYear = publishedYear;
         this.price = price;
         this.paginas = paginas;
+        this.descripcion = descripcion;
+    }
+
+    public boolean validate(Book book) throws Exception {
+        if(this.title.isEmpty()){
+            throw new Exception("Titulo Invalido - No existe");
+        }
+
+        if(this.descripcion.length() > 200){
+            throw new Exception("La descripción no puede tener mas de 200 caracteres");
+        }
+
+        if(this.price < 10000){
+            throw new Exception("El precio debe ser mayor a 10000");
+        }
+
+        String str = String.valueOf(this.price);
+        int decNumberInt = Integer.parseInt(str.substring(str.indexOf('.') + 1));
+        if(decNumberInt > 0){
+            throw new Exception("El precio contiene centavos");
+        }
+
+        if(!this.author.contains(" ")){
+            throw new Exception("El autor no contiene apellido");
+        }
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+
+        if(this.publishedYear > year){
+            throw new Exception("El año de publicación es mayor al año actual");
+        }
+
+        String publishYear = Integer.toString(this.publishedYear);
+        if(publishYear.length() < 4){
+            throw new Exception("El año de publicación tiene menos de 4 digitos");
+        }
+        return true;
+    }
+
+    public String comprobar (String autor){
+        if(this.author.equals(autor)){
+            return "titulo" + this.title+", autor:" + this.author;
+        }
+        return null;
+    }
+
+    public String detallar(String libro){
+        if(this.title.equals(libro)) return ""+ this.descripcion + ", "+ this.price + ", "+this.publishedYear + ", "+this.paginas;
+        return null;
     }
 
     public String getTitle() {
@@ -59,5 +112,13 @@ public class Book implements Serializable {
 
     public void setPaginas(Integer paginas) {
         this.paginas = paginas;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

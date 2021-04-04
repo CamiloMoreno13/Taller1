@@ -2,42 +2,49 @@ package com.webDevelopment.solid.services;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.webDevelopment.solid.models.Book;
+import com.webDevelopment.solid.models.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class BookServiceImp implements BookService{
 
-    private List<Book> libros;
+    private Repository repository;
 
     public BookServiceImp() {
-        this.libros = new ArrayList<Book>();
-        Book book = new Book("libro1","camilo",2000,200d,500);
-        this.libros.add(book);
-        book = new Book("libro2","camilo",2010,250d,200);
-        this.libros.add(book);
-        book = new Book("libro3","aldemar",2020,700d,1000);
-        this.libros.add(book);
-
+        this.repository = new Repository();
     }
 
     @Override
-    @JsonCreator
-    public Book agregar(Book book) {
-        Book nuevo = new Book(book.getTitle(), book.getAuthor(), book.getPublishedYear(), book.getPrice(), book.getPaginas());
-        this.libros.add(nuevo);
-        return nuevo;
+    public Book agregar(Book book) throws Exception{
+        if(!book.validate(book)){
+            throw new Exception("BookServiceImp.agregar Cause: ");
+        }
+        this.repository.agregar(book);
+        return book;
+    }
+    @Override
+    public List<String> listarAuthor(String autor) throws Exception{
+        List<String> libros = new ArrayList<String>();
+        if(this.repository.listar().isEmpty()) throw new Exception("BookServiceImp.listarAuthor Cause: No hay libros");
+        for (Book valor: this.repository.listar()) {
+            String val = valor.comprobar(autor);
+            if(val != null){
+                libros.add(val);
+            }
+        }
+        return libros;
     }
 
     @Override
-    public List<Book> listarAuthor() {
-        return this.libros;
-    }
-
-    @Override
-    public String detallar(Book book) {
+    public String detallar(String libro) {
+        for (Book valor: this.repository.listar()) {
+            String val = valor.detallar(libro);
+            if(val != null) return val;
+        }
         return null;
     }
 }
