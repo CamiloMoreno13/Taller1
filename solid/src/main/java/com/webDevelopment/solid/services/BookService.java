@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface BookService {
-    public void agregar(Book book);
+    public Book agregar(Book book);
     public List<Book> listarAuthor();
     public String detallar(Book book);
 }

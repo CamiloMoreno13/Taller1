@@ -1,13 +1,19 @@
 package com.webDevelopment.solid.models;
 
-public class Book {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title;
     private String author;
     private Integer publishedYear;
     private Double price;
     private Integer paginas;
 
-    public Book(String title, String author, Integer publishedYear, Double price, Integer paginas) {
+    @JsonCreator
+    public Book(@JsonProperty("title") String title,@JsonProperty("author") String author, @JsonProperty("publishedYear")Integer publishedYear, @JsonProperty("price") Double price,@JsonProperty("paginas") Integer paginas) {
         this.title = title;
         this.author = author;
         this.publishedYear = publishedYear;
