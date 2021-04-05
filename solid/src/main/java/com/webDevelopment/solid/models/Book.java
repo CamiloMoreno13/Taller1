@@ -65,14 +65,14 @@ public class Book implements Serializable {
         if(this.author.equals(autor)){
             HashMap<String,String> valor = new HashMap<String,String>();
             valor.put("title",this.title);
-            valor.put("autor",this.author);
+            valor.put("author",this.author);
             return valor;
         }
         return null;
     }
 
     public String detallar(String libro){
-        if(this.title.equals(libro) && this.paginas <= 1500) return "la descripcion es: "+ this.descripcion + ", con un precio de:  "+ this.price + ", fue publicado en: "+this.publishedYear + " y tienen "+this.paginas + " paginas.";
+        if(this.title.equals(libro) && this.paginas <= 1500) return "Descripcion: "+ this.descripcion + " Este libro tiene un precio de:  "+ this.price + ", fue publicado en: "+this.publishedYear + " y cuenta con "+this.paginas + " paginas.";
         return null;
     }
 
