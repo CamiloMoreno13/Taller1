@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.webDevelopment.solid.SolidApplication.LOGGER;
@@ -36,12 +37,14 @@ public class BookController {
     }
 
     @GetMapping(value = "/listar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String>> getLibrosAuthor(@RequestBody String autor){
-        List<String> books = null;
+    public ResponseEntity<List<HashMap<String,String>>> getLibrosAuthor(@RequestBody String autor){
+        List<HashMap<String,String>> books = null;
+        HttpStatus codigo = HttpStatus.ACCEPTED;
         try {
             books = this.bookService.listarAuthor(autor);
         } catch (Exception e){
             LOGGER.error("BookController.getLibrosAuthor Causa: " + e.getMessage());
+            codigo = HttpStatus.BAD_REQUEST;
         }
         return ResponseEntity.status(HttpStatus.OK).body(books);
     }
@@ -53,8 +56,9 @@ public class BookController {
         try{
             detalle = this.bookService.detallar(libro);
         } catch (Exception e){
+            LOGGER.error("BookController.getLibrosAuthor Causa: " + e.getMessage());
             codigo = HttpStatus.BAD_REQUEST;
-            detalle = "No existe libro";
+            detalle = "No existe el libro que quiere detallar o excede las 1500 paginas";
         }
         return ResponseEntity.status(codigo).body(detalle);
     }

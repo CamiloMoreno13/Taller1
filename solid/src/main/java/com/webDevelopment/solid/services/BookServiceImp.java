@@ -26,25 +26,30 @@ public class BookServiceImp implements BookService{
         this.repository.agregar(book);
         return book;
     }
+
     @Override
-    public List<String> listarAuthor(String autor) throws Exception{
-        List<String> libros = new ArrayList<String>();
+    public List<HashMap<String,String>> listarAuthor(String autor) throws Exception{
+        HashMap<String,String> libros = new HashMap<String,String>();
+        List<HashMap<String,String>> respuesta = new ArrayList<HashMap<String,String>>();
         if(this.repository.listar().isEmpty()) throw new Exception("BookServiceImp.listarAuthor Cause: No hay libros");
         for (Book valor: this.repository.listar()) {
-            String val = valor.comprobar(autor);
-            if(val != null){
-                libros.add(val);
+            libros = valor.busquedaLibroXAutor(autor);
+            if(libros != null){
+                respuesta.add(libros);
             }
         }
-        return libros;
+        if(respuesta.isEmpty()){
+            throw new Exception("BookServiceImp.listarAuthor Cause: No hay ningun autor con ese nombre");
+        }
+        return respuesta;
     }
 
     @Override
-    public String detallar(String libro) {
+    public String detallar(String libro) throws Exception{
         for (Book valor: this.repository.listar()) {
             String val = valor.detallar(libro);
             if(val != null) return val;
         }
-        return null;
+        throw new Exception("BookServiceImp.detallar Cause: No existe el libro que quiere detallar");
     }
 }

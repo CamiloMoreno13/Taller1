@@ -7,11 +7,19 @@ public class Repository {
 
     public Repository() {
         this.libros = new ArrayList<Book>();
-        Book book = new Book("libro1","camilo",2000,200d,500,"perras");
+        Book book = new Book("El alquimista","Paulo Coelho",2010,45000d,500,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
         this.libros.add(book);
-        book = new Book("libro2","camilo",2010,250d,200,"hola a todos");
+        book = new Book("Veronica decide morir","Paulo Coelho",2010,35000d,900,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
         this.libros.add(book);
-        book = new Book("libro3","aldemar",2020,700d,1000,"que paso hermanito");
+        book = new Book("Brida","Paulo Coelho",2021,10000d,2500,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
+        this.libros.add(book);
+        book = new Book("Harry Potter y la piedra filosofal","J. K. Rowling",1997,50000d,2500,"ut rutrum felis ipsum sit amet arcu. Nulla eget consectetur diam. Praesent at congue diam. Cras cursus neque gravida.");
+        this.libros.add(book);
+        book = new Book("Animales fantásticos y dónde encontrarlos","J. K. Rowling",1960,11000d,1500,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
+        this.libros.add(book);
+        book = new Book("Los cuentos de Beedle el Bardo","J. K. Rowling",1999,10999d,3500,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
+        this.libros.add(book);
+        book = new Book("Harry Potter y el prisionero de Azkaban","J. K. Rowling",2003,105000d,450,"Morbi pulvinar metus vel pharetra imperdiet. Cras sed purus maximus, elementum nunc at, imperdiet sem. Proin blandit sed mi at malesuada. Quisque nec tempor augue. Mauris scelerisque lacus ac diam.");
         this.libros.add(book);
     }
 

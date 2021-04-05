@@ -1,7 +1,6 @@
 package com.webDevelopment.solid.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -62,62 +61,54 @@ public class Book implements Serializable {
         return true;
     }
 
-    public String comprobar (String autor){
+    public HashMap<String,String> busquedaLibroXAutor(String autor){
         if(this.author.equals(autor)){
-            return "titulo" + this.title+", autor:" + this.author;
+            HashMap<String,String> valor = new HashMap<String,String>();
+            valor.put("title",this.title);
+            valor.put("autor",this.author);
+            return valor;
         }
         return null;
     }
 
     public String detallar(String libro){
-        if(this.title.equals(libro)) return ""+ this.descripcion + ", "+ this.price + ", "+this.publishedYear + ", "+this.paginas;
+        if(this.title.equals(libro) && this.paginas <= 1500) return "la descripcion es: "+ this.descripcion + ", con un precio de:  "+ this.price + ", fue publicado en: "+this.publishedYear + " y tienen "+this.paginas + " paginas.";
         return null;
     }
 
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getAuthor() {
         return author;
     }
-
     public void setAuthor(String author) {
         this.author = author;
     }
-
     public Integer getPublishedYear() {
         return publishedYear;
     }
-
     public void setPublishedYear(Integer publishedYear) {
         this.publishedYear = publishedYear;
     }
-
     public Double getPrice() {
         return price;
     }
-
     public void setPrice(Double price) {
         this.price = price;
     }
-
     public Integer getPaginas() {
         return paginas;
     }
-
     public void setPaginas(Integer paginas) {
         this.paginas = paginas;
     }
-
     public String getDescripcion() {
         return descripcion;
     }
-
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
